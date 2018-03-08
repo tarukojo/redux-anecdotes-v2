@@ -34,4 +34,15 @@ const reducer = (store = initialState, action) => {
   return store
 }
 
+export const handleSubmit = (e) => {
+  e.preventDefault()
+  const content = e.target.anecdote.value
+  this.props.store.dispatch({ 
+    type: 'CREATE',
+    content
+  })
+
+  e.target.anecdote.value = ''
+}
+
 export default reducer

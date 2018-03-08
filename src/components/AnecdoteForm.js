@@ -1,5 +1,6 @@
 import React from 'react'
 import { handleSubmit } from '../reducers/anecdoteReducer'
+import { handleSubmitMessage } from '../reducers/notificationReducer'
 
 class AnecdoteForm extends React.Component {
 
@@ -8,6 +9,12 @@ class AnecdoteForm extends React.Component {
     this.props.store.dispatch(
       handleSubmit(event.target.anecdote.value)
     )
+    this.props.store.dispatch(
+      handleSubmitMessage('New message created:'+ event.target.anecdote.value)
+    )
+    setTimeout(() => {
+      this.props.store.dispatch(handleSubmitMessage(''))
+    }, 5000)
     event.target.anecdote.value = ''
   }
 

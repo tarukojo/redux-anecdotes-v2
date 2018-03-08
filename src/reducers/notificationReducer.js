@@ -4,13 +4,25 @@ const initialState = {
   message: notificationAtStart
 }
 
-const notificationReducer = (store = initialState, action) => {
-  /*if (action.type==='VOTE') {
-    return 'voted'
+export const handleVoteMessage = (message) => {
+  return {
+    type: 'VOTE MESSAGE',
+    message
   }
-  if (action.type === 'CREATE') {
-    return 'created'
-  }*/
+}
+
+export const handleSubmitMessage = (message) => {
+  return { 
+    type: 'CREATE MESSAGE',
+    message
+  }
+}
+
+const notificationReducer = (store = initialState, action) => {
+  if (action.type==='VOTE MESSAGE' || action.type === 'CREATE MESSAGE') {
+    return  { message: action.message }
+  }
+  
   return store
 }
 

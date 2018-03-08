@@ -41,4 +41,11 @@ export const handleSubmit = (content) => {
   }
 }
 
+export const handleVoteAnecdote = (id) => {
+  return {
+    type: 'VOTE',
+    id
+  }
+}
+
 export default reducer

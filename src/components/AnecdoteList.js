@@ -18,7 +18,13 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
-    const anecdotes = this.props.store.getState().anecdotes
+    var anecdotes = this.props.store.getState().anecdotes
+    
+    if (this.props.store.getState().filter.filter !== '') {
+      console.log(this.props.store.getState().filter)
+      anecdotes = anecdotes.filter(anecdote => anecdote.content.includes(this.props.store.getState().filter.filter))
+    }
+
     return (
       <div>
         <h2>Anecdotes</h2>

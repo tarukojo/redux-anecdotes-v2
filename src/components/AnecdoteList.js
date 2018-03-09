@@ -17,13 +17,8 @@ class AnecdoteList extends React.Component {
   }
 
   render() {
-    var anecdotes = this.props.anecdotes
+    const anecdotes = this.props.visibleAnecdotes
     
-    if (this.props.filter.filter !== '') {
-      console.log(this.props.filter)
-      anecdotes = anecdotes.filter(anecdote => anecdote.content.includes(this.props.filter.filter))
-    }
-
     return (
       <div>
         <h2>Anecdotes</h2>
@@ -44,12 +39,17 @@ class AnecdoteList extends React.Component {
     )
   }
 }
+const anecdotesToShow = (anecdotes, filter) => {
+  if (filter.filter !== '') {
+    return anecdotes.filter(anecdote => anecdote.content.includes(filter.filter))
+  } else {
+    return anecdotes
+  }
+}
 
 const mapStateToProps = (state) => {
   return {
-    anecdotes: state.anecdotes,
-    message: state.message,
-    filter: state.filter
+    visibleAnecdotes: anecdotesToShow(state.anecdotes, state.filter)
   }
 }
 

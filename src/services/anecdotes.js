@@ -7,13 +7,15 @@ const getAll = async () => {
   return response.data
 }
 
+const getId = () => (100000*Math.random()).toFixed(0)
+
 const createNew = async (content) => {
-  const response = await axios.post(url, { content })
+  const response = await axios.post(url, { id: getId(), content: content, votes: 0 })
   return response.data
 }
 
-const vote = async (id) => {
-  const response = await axios.put(url, { id }) 
+const vote = async (anecdote) => {
+  const response = await axios.put(url+'/'+ anecdote.id, anecdote) 
   return response.status
 }
 

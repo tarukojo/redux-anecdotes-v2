@@ -8,11 +8,13 @@ class AnecdoteList extends React.Component {
 
   handleVote =  (id, content) => async () => {
     console.log('handleVote')
-    // not working const responseStatus = await anecdoteService.vote(id)
-    
+    const anecdote = this.props.visibleAnecdotes.find(anecdote => anecdote.id === id)
+    const changedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
+    const responseStatus = await anecdoteService.vote(changedAnecdote)
+
     this.props.handleVoteAnecdote(id)
     
-    this.props.handleVoteMessage('Voted message '+ content)
+    this.props.handleVoteMessage('Voted anecdote: '+ content)
     
     setTimeout(() => {
       this.props.handleVoteMessage('')

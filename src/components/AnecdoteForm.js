@@ -13,7 +13,7 @@ class AnecdoteForm extends React.Component {
 
     const newAnecdote = await anecdoteService.createNew(content)
     console.log(newAnecdote)
-    this.props.handleSubmit(newAnecdote.content)
+    this.props.handleSubmit(newAnecdote)
     
     this.props.handleSubmitMessage('New message created:'+ content)
     

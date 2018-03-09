@@ -38,13 +38,6 @@ const reducer = (store = [], action) => {
   return store
 }
 
-export const anecdoteInitialization = (data) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data
-  }
-}
-
 export const initializeAnecdotes = () => {
   return async (dispatch) => {
     const anecdotes = await anecdoteService.getAll()
@@ -55,17 +48,24 @@ export const initializeAnecdotes = () => {
   }
 }
 
-export const handleSubmit = (anecdote) => {
-  return { 
-    type: 'CREATE',
-    anecdote
+export const handleSubmit = (content) => {
+  return async (dispatch) => {
+    const anecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'CREATE',
+      anecdote
+    })
   }
 }
 
-export const handleVoteAnecdote = (id) => {
-  return {
-    type: 'VOTE',
-    id
+export const handleVoteAnecdote = (anecdote) => {
+  return async (dispatch) => {
+    const result = await anecdoteService.vote(anecdote)
+    const id = anecdote.id
+    dispatch({
+      type: 'VOTE',
+      id
+    })
   }
 }
 

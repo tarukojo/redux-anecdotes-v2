@@ -10,9 +10,8 @@ class AnecdoteList extends React.Component {
     console.log('handleVote')
     const anecdote = this.props.visibleAnecdotes.find(anecdote => anecdote.id === id)
     const changedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
-    const responseStatus = await anecdoteService.vote(changedAnecdote)
 
-    this.props.handleVoteAnecdote(id)
+    this.props.handleVoteAnecdote(changedAnecdote)
     
     this.props.handleVoteMessage('Voted anecdote: '+ content)
     

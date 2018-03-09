@@ -1,19 +1,18 @@
 import React from 'react'
 import { handleSubmit } from '../reducers/anecdoteReducer'
 import { handleSubmitMessage } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
 class AnecdoteForm extends React.Component {
 
   createNew = (event) => {
     event.preventDefault()
-    this.props.store.dispatch(
-      handleSubmit(event.target.anecdote.value)
-    )
-    this.props.store.dispatch(
-      handleSubmitMessage('New message created:'+ event.target.anecdote.value)
-    )
+    this.props.handleSubmit(event.target.anecdote.value)
+    
+    this.props.handleSubmitMessage('New message created:'+ event.target.anecdote.value)
+    
     setTimeout(() => {
-      this.props.store.dispatch(handleSubmitMessage(''))
+      this.props.handleSubmitMessage('')
     }, 5000)
     event.target.anecdote.value = ''
   }
@@ -31,4 +30,19 @@ class AnecdoteForm extends React.Component {
   }
 }
 
-export default AnecdoteForm
+const mapStateToProps = (state) => {
+  return {
+    anecdotes: state.anecdotes,
+    message: state.message,
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = {
+  handleSubmit, 
+  handleSubmitMessage
+}
+
+const ConnectedAnecdoteForm = connect(mapStateToProps, mapDispatchToProps)(AnecdoteForm)
+
+export default ConnectedAnecdoteForm

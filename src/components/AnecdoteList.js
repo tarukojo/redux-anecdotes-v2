@@ -1,28 +1,27 @@
 import React from 'react'
 import { handleVoteMessage } from '../reducers/notificationReducer'
 import { handleVoteAnecdote } from '../reducers/anecdoteReducer'
+import { connect } from 'react-redux'
 
 class AnecdoteList extends React.Component {
 
   handleVote = (id, content) => () => {
     console.log('handleVote')
-    this.props.store.dispatch( 
-      handleVoteAnecdote(id)
-    )
-    this.props.store.dispatch(
-      handleVoteMessage('Voted message '+ content)
-    )
+    this.props.handleVoteAnecdote(id)
+    
+    this.props.handleVoteMessage('Voted message '+ content)
+    
     setTimeout(() => {
-      this.props.store.dispatch(handleVoteMessage(''))
+      this.props.handleVoteMessage('')
     }, 5000)
   }
 
   render() {
-    var anecdotes = this.props.store.getState().anecdotes
+    var anecdotes = this.props.anecdotes
     
-    if (this.props.store.getState().filter.filter !== '') {
-      console.log(this.props.store.getState().filter)
-      anecdotes = anecdotes.filter(anecdote => anecdote.content.includes(this.props.store.getState().filter.filter))
+    if (this.props.filter.filter !== '') {
+      console.log(this.props.filter)
+      anecdotes = anecdotes.filter(anecdote => anecdote.content.includes(this.props.filter.filter))
     }
 
     return (
@@ -46,4 +45,18 @@ class AnecdoteList extends React.Component {
   }
 }
 
-export default AnecdoteList
+const mapStateToProps = (state) => {
+  return {
+    anecdotes: state.anecdotes,
+    message: state.message,
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = {
+  handleVoteAnecdote, handleVoteMessage
+}
+
+const ConnectedAnecdoteList = connect(mapStateToProps, mapDispatchToProps)(AnecdoteList) 
+
+export default ConnectedAnecdoteList

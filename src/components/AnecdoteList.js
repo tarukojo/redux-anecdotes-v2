@@ -2,11 +2,14 @@ import React from 'react'
 import { handleVoteMessage } from '../reducers/notificationReducer'
 import { handleVoteAnecdote } from '../reducers/anecdoteReducer'
 import { connect } from 'react-redux'
+import anecdoteService from '../services/anecdotes'
 
 class AnecdoteList extends React.Component {
 
-  handleVote = (id, content) => () => {
+  handleVote =  (id, content) => async () => {
     console.log('handleVote')
+    // not working const responseStatus = await anecdoteService.vote(id)
+    
     this.props.handleVoteAnecdote(id)
     
     this.props.handleVoteMessage('Voted message '+ content)
